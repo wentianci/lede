@@ -7,7 +7,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 
 
-name: OpenWrt-CI
+name: OpenWrt-WENWW
 
 on:
   push:
@@ -52,7 +52,12 @@ jobs:
           ln -s /mnt/openwrt/staging_dir ./staging_dir
 
           df -h
-
+      - name: 自定义插件主题。
+        run: |
+          cd package
+          mkdir openwrt-packages
+          cd openwrt-packages
+          git clone https://github.com/pymumu/smartdns.git
       - name: Update feeds
         run: |
           ./scripts/feeds update -a
@@ -161,6 +166,10 @@ jobs:
           # CONFIG_PACKAGE_luci-app-webadmin=y
           CONFIG_PACKAGE_luci-app-wireguard=y
           # CONFIG_PACKAGE_luci-app-wrtbwmon=y
+          CONFIG_PACKAGE_smartdns=y
+          CONFIG_PACKAGE_luci-app-mwan=y
+          CONFIG_PACKAGE_luci-app-mwan3=y
+          CONFIG_PACKAGE_luci-app-multiwan=y
           EOF
 
           # LuCI主题:
